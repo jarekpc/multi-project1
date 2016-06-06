@@ -1,0 +1,44 @@
+allprojects {
+  //Put instructions for all projects
+}
+subprojects {
+  //Put instructions for each sub project
+}
+//To understand what is happening, update your build.gradle file in the root folder i.e. e:\javaprojects to contain the following:
+allprojects {
+  task hello << { task -> println "I'm $task.project.name" }
+}
+subprojects {
+  apply plugin: "java"
+  apply plugin: "eclipse"
+  
+  repositories {
+      mavenCentral()
+  }
+dependencies {        
+    testCompile "junit:junit:4+"
+ }
+}
+
+//API Project specific stuff
+project(':api') {
+	  dependencies {
+      compile project(':common')
+      compile 'org.apache.commons:commons-lang3:3.3.2'
+      compile 'log4j:log4j:1.2.17'
+   }
+}
+//Common Project specific stuff
+project(':common') {
+
+dependencies {
+    compile 'org.apache.commons:commons-lang3:3.3.2'
+  }
+}
+//App Project specific stuff
+project(':app') {
+	dependencies {
+      compile project(':common'), project(':api')
+      compile 'log4j:log4j:1.2.17'
+   }
+}
